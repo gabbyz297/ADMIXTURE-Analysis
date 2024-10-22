@@ -77,5 +77,5 @@ FastQC is a tool that analyzes raw sequence data from high throughput sequencing
 
 `cat sample_list.txt | parallel --jobs 16 "fastqc {}.fastq.gz -o /work/gabby297/delaware_pool1/fastqc/"`
 
-
+FastQC script without notes can be found [here]()
 
