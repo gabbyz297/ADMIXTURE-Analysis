@@ -73,7 +73,7 @@ FastQC is a tool that analyzes raw sequence data from high throughput sequencing
 
 `cd /path/to/files/`
 
-#Use `cat` to call sample list parallel will use to call files and `parallel --jobs 16` to run 16 jobs in parallel. Use `{}.fastq.gz` to specify the file type at the end of all the files and use `-o` to specify where the output files should be written. 
+#Use `cat` to call the list of samples parallel will use to call files and `parallel --jobs 16` to run 16 jobs in parallel. Use `{}.fastq.gz` to specify the file type at the end of all the files and use `-o` to specify where the output files should be written. 
 
 `cat sample_list.txt | parallel --jobs 16 "fastqc {}.fastq.gz -o /work/gabby297/delaware_pool1/fastqc/"`
 
