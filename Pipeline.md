@@ -92,7 +92,7 @@ Install MultiQC in the MultiQC conda environment:
 `conda install -c bioconda multiqc`
 
 ## Run MultiQC 🏃‍♀️
-To compile `html` outputs into one `html` file, run MultiQC in the directory that the files are located. This will create a file called `multiqc.html` 
+To compile `html` outputs into one `html` file, run MultiQC in the directory that the files are located. This will create a file called `multiqc_report.html` 
 
 `cd /path/to/fastqc/`
 
