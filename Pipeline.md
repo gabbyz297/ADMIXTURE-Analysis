@@ -1,7 +1,7 @@
-## Create a list of file names for running scripts in parallel 
+## Create a list of file names for running scripts in parallel 📚
 We will use a list of file names without the file extensions for running our scripts in parallel. For example: a file named `sample1.fastq` would be `sample1` in our text file. 
 
-## Install Miniconda  :snake:
+## Install Miniconda  🐍
 Miniconda is a free installer that includes conda and python. You can chose from thousands of packages in Anaconda's public repository to install and miniconda will install all of it's dependancies automatically. We will use miniconda to download the packages we need to clean up our raw sequence data.
 
 _This code was taken from [Anaconda](https://docs.anaconda.com/miniconda/)_
@@ -18,7 +18,7 @@ Run the bash script to install miniconda:
 Delete the miniconda bash script: 
 `rm ~/miniconda3/miniconda.sh`
 
-## Install FastQC using Miniconda 
+## Install FastQC using Miniconda 🐍
 Now we can use Miniconda to install our first package, FastQC.
 
 Create a conda environment to install FastQC into: 
@@ -30,7 +30,7 @@ Activate the FastQC conda environment:
 Install FastQC in the FastQC conda environment: 
 `conda install -c bioconda fastqc`
 
-## Run FastQC 
+## Run FastQC 🏃‍♀️
 FastQC is a tool that analyzes raw sequence data from high throughput sequencing to identify potential issues. We will use the output to determine if any samples need to be removed from our analysis and will help us determine our trimming parameters later. FastQC can be run on zipped fasta files so if your files are zipped, you don't have to unzip them. 
 
 `#!/bin/bash`
@@ -78,4 +78,26 @@ FastQC is a tool that analyzes raw sequence data from high throughput sequencing
 `cat sample_list.txt | parallel --jobs 16 "fastqc {}.fastq.gz -o /work/gabby297/delaware_pool1/fastqc/"`
 
 FastQC script without notes can be found [here](https://github.com/gabbyz297/Structure-Pipeline/blob/main/fastqc.sh)
+
+## Install MultiQC using Miniconda 🐍
+MultiQC is a tool that compiles FastQC results into a single `html` file to view results for multiple files more easily. 
+
+Create a conda environment to install MultiQC into: 
+`conda create -n multiqc`
+
+Activate the MultiQC conda environment: 
+`conda activate multiqc`
+
+Install MultiQC in the MultiQC conda environment: 
+`conda install -c bioconda multiqc`
+
+## Run MultiQC 🏃‍♀️
+To compile `html` outputs into one `html` file, run MultiQC in the directory that the files are located. This will create a file called `multiqc.html` 
+
+`cd /path/to/fastqc/`
+
+`conda activate multiqc`
+
+`multiqc .`
+
 
