@@ -88,8 +88,10 @@ Create a conda environment to install MultiQC into:
 Activate the MultiQC conda environment: 
 `conda activate multiqc`
 
+MultiQC recommends not installing with `-c bioconda` anymore because it pulls an old version of MultiQC that may cause issues later. Instead, run: `conda config --add channels bioconda` before installing multiqc
+
 Install MultiQC in the MultiQC conda environment: 
-`conda install -c bioconda multiqc`
+`conda install multiqc`
 
 ## Run MultiQC 🏃‍♀️
 To compile `html` outputs into one `html` file, run MultiQC in the directory that the files are located. This will create a file called `multiqc_report.html` 
@@ -100,4 +102,5 @@ To compile `html` outputs into one `html` file, run MultiQC in the directory tha
 
 `multiqc .`
 
+Install Trimmomatic ✂️
 
