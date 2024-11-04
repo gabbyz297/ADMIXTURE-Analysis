@@ -157,7 +157,7 @@ Install Trimmomatic in the Trimmomatic conda environment:
 
 `cat sample_list.txt | parallel "trimmomatic PE {}_R1_001.fastq.gz {}_R2_001.fastq.gz /path/to/trimmomatic/{}.1U.fq.gz /path/to/trimmomatic/{}.1P.fq.gz /path/to/trimmomatic/{}.2U.fq.gz /path/to/trimmomatic/{}.2P.fq.gz ILLUMINACLIP:/path/to/Trimmomatic-0.39/adapters/TruSeq3-PE.fa:2:30:10 SLIDINGWINDOW:5:20 MINLEN:50"`
 
-Trimmomatic script without notes can be found [here]()
+Trimmomatic script without notes can be found [here](trimmomatic.sh)
 
 ## Run FastQC/MultiQC again to make sure trimming was successful 👍
 This can also help determine if there are any samples that you'd like to remove or resequence before further analysis. 
