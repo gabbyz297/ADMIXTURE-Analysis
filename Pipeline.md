@@ -22,7 +22,7 @@ Delete the miniconda bash script:
 Now we can use Miniconda to install our first package, FastQC.
 
 Create a conda environment to install FastQC into: 
-`conda create -n fastqc python=3`
+`conda create -n fastqc`
 
 Activate the FastQC conda environment: 
 `conda activate fastqc`
@@ -102,5 +102,62 @@ To compile `html` outputs into one `html` file, run MultiQC in the directory tha
 
 `multiqc .`
 
-Install Trimmomatic ✂️
+## Install Trimmomatic using Miniconda 🐍
+`Trimmomatic` trims reads based on either a sliding window with parameters you set, or it can automatically trim leading and trailing sequences based on FastQC results. 
 
+Create a conda environment to install Trimmomatic into: 
+`conda create -n trimmomatic`
+
+Activate the Trimmomatic conda environment: 
+`conda activate trimmomatic`
+
+Install Trimmomatic in the Trimmomatic conda environment: 
+`conda install -c bioconda trimmomatic`
+
+## Run Trimmomatic ✂️
+`Trimmomatic` parameters will depend on FastQC results. High quality sequence data may allow for more stringent paramenters whereas average sequence quality may require you to relax some parameters to prevent throwing out the majority of your reads. 
+
+`#!/bin/bash`
+
+`#SBATCH -N 1`
+
+`#SBATCH -n 48`
+
+`#SBATCH -t 04:00:00`
+
+`#SBATCH -p workq`
+
+`#SBATCH -A Allocation name`
+
+`#SBATCH -o trim_[date].out`
+
+`#SBATCH -e trim_[date].err`
+
+#This script will be run in parallel
+
+`module load parallel/20190222/intel-19.0.5`
+
+#Specify where conda is installed  
+
+`source /path/to/miniconda3/etc/profile.d/conda.sh`
+
+#Activate conda environment
+
+`conda activate trimmomatic`
+
+#Specify where Trimmomatic is installed
+
+`/path/to/miniconda3/envs/trimmomatic/bin/trimmomatic`
+
+#Change directory to where files are located
+
+`cd /path/to/files/`
+
+#Use `cat` to call the list of samples parallel will use to call files  Use `{}_R1_001.fastq.gz` and `{}_R2_001.fastq.gz` to specify the file type at the end of all the files (and distinguish forward from reverse reads) and use `-o` to specify where the output files should be written. `Trimmomatic` has 4 output: 1P/2P are paired forward/reverse reads, 1U/2U are the foward/reverse reads that were unable to be paired. You can use `ILLUMINACLIP` to remove adapters either by providing your own adapter file or using one of the files provided by Trimmomatic. I don't think the adapter files are downloaded when you install Trimmomatic with conda so you would have to download this file seperately.
+
+`cat sample_list.txt | parallel "trimmomatic PE {}_R1_001.fastq.gz {}_R2_001.fastq.gz /path/to/trimmomatic/{}.1U.fq.gz /path/to/trimmomatic/{}.1P.fq.gz /path/to/trimmomatic/{}.2U.fq.gz /path/to/trimmomatic/{}.2P.fq.gz ILLUMINACLIP:/path/to/Trimmomatic-0.39/adapters/TruSeq3-PE.fa:2:30:10 SLIDINGWINDOW:5:20 MINLEN:50"`
+
+Trimmomatic script without notes can be found [here]()
+
+## Run FastQC/MultiQC again to make sure trimming was successful 👍
+This can also help determine if there are any samples that you'd like to remove or resequence before further analysis. 
