@@ -161,3 +161,8 @@ Trimmomatic script without notes can be found [here](trimmomatic.sh)
 
 ## Run FastQC/MultiQC again to make sure trimming was successful 👍
 This can also help determine if there are any samples that you'd like to remove or resequence before further analysis. 
+
+## Index Reference Genome to prep for Genome Alignment 📖
+If your reference isn't already indexed, you can use code found [here](Pipeline.md)
+
+
