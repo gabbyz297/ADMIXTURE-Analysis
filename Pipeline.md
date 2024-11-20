@@ -102,20 +102,20 @@ To compile `html` outputs into one `html` file, run MultiQC in the directory tha
 
 `multiqc .`
 
-## Install Trimmomatic using Miniconda 🐍
-`Trimmomatic` trims reads based on either a sliding window with parameters you set, or it can automatically trim leading and trailing sequences based on FastQC results. 
+## Install Trim Galore using Miniconda 🐍
+`trim_galore` removes adaptors and trims reads based on a specified quality score. 
 
-Create a conda environment to install Trimmomatic into: 
-`conda create -n trimmomatic`
+Create a conda environment to install Trim Galore into: 
+`conda create -n trim_galore`
 
-Activate the Trimmomatic conda environment: 
-`conda activate trimmomatic`
+Activate the Trim Galore conda environment: 
+`conda activate trim_galore`
 
-Install Trimmomatic in the Trimmomatic conda environment: 
-`conda install -c bioconda trimmomatic`
+Install Trim Galore in the Trim Galore conda environment: 
+`conda install -c bioconda trim_galore`
 
-## Run Trimmomatic ✂️
-`Trimmomatic` parameters will depend on FastQC results. High quality sequence data may allow for more stringent paramenters whereas average sequence quality may require you to relax some parameters to prevent throwing out the majority of your reads. 
+## Run Trim Galore ✂️
+`trim_galore` parameters will depend on FastQC results. High quality sequence data may allow for more stringent paramenters whereas average sequence quality may require you to relax some parameters to prevent throwing out the majority of your reads. 
 
 `#!/bin/bash`
 
@@ -143,26 +143,29 @@ Install Trimmomatic in the Trimmomatic conda environment:
 
 #Activate conda environment
 
-`conda activate trimmomatic`
+`conda activate trim_galore`
 
-#Specify where Trimmomatic is installed
+#Specify where Trim Galore is installed
 
-`/path/to/miniconda3/envs/trimmomatic/bin/trimmomatic`
+`/path/to/miniconda3/envs/trim_galore/bin/trim_galore`
 
 #Change directory to where files are located
 
 `cd /path/to/files/`
 
-#Use `cat` to call the list of samples parallel will use to call files  Use `{}_R1_001.fastq.gz` and `{}_R2_001.fastq.gz` to specify the file type at the end of all the files (and distinguish forward from reverse reads) and use `-o` to specify where the output files should be written. `Trimmomatic` has 4 output: 1P/2P are paired forward/reverse reads, 1U/2U are the foward/reverse reads that were unable to be paired. You can use `ILLUMINACLIP` to remove adapters either by providing your own adapter file or using one of the files provided by Trimmomatic. I don't think the adapter files are downloaded when you install Trimmomatic with conda so you would have to download this file seperately.
 
-`cat sample_list.txt | parallel "trimmomatic PE {}_R1_001.fastq.gz {}_R2_001.fastq.gz /path/to/trimmomatic/{}.1U.fq.gz /path/to/trimmomatic/{}.1P.fq.gz /path/to/trimmomatic/{}.2U.fq.gz /path/to/trimmomatic/{}.2P.fq.gz ILLUMINACLIP:/path/to/Trimmomatic-0.39/adapters/TruSeq3-PE.fa:2:30:10 SLIDINGWINDOW:5:20 MINLEN:50"`
 
-Trimmomatic script without notes can be found [here](trimmomatic.sh)
+`cat sample_list.txt | parallel "trim_galore --paired -q 20  --dont_gzip  {}_R1_001.fastq.gz {}_R2_001.fastq.gz -o /path/to/trim_galore/"`
+
+Trim Galore script without notes can be found [here]()
 
 ## Run FastQC/MultiQC again to make sure trimming was successful 👍
 This can also help determine if there are any samples that you'd like to remove or resequence before further analysis. 
 
 ## Index Reference Genome to prep for Genome Alignment 📖
 If your reference isn't already indexed, you can use code found [here](Pipeline.md)
+
+## Align Reads to Reference Genome with BWA mem 📖
+
 
 
