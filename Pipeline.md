@@ -86,6 +86,7 @@ To compile `html` outputs into one `html` file, run MultiQC in the directory tha
 
 `multiqc .`
 
+
 ## Install Trim Galore using Miniconda 🐍
 `trim_galore` removes adaptors and trims reads based on a specified quality score. 
 
@@ -148,7 +149,9 @@ Trimmed reads will now be aligned to our indexed reference genome using BWA mem.
 
 `source /path/to/miniconda3/etc/profile.d/conda.sh`
 
-conda activate bwa
+#Activate conda environment
+
+`conda activate bwa`
 
 #Specify where BWA is installed
 
@@ -162,5 +165,42 @@ conda activate bwa
                                                                
 BWA script without notes can be found [here](bwa.sh)
 
+## Install SAMtools using Miniconda 🐍
 
+Create a conda environment to install SAMtools into: 
+`conda create -n samtools`
 
+Activate the SAMtools conda environment: 
+`conda activate samtools`
+
+Install Trim Galore in the SAMtools conda environment: 
+`conda install -c bioconda samtools`
+
+## Convert SAM to BAM files with SAMtools 🔃
+Next we will convert our SAM files to BAM files for downstream analyses using SAMtools. 
+
+`-q` Skip alignments with MAPQ smaller than; `-bt` If @SQ lines are absent in the header
+
+#This script will be run in parallel
+
+`module load parallel/20190222/intel-19.0.5`
+
+#Specify where conda is installed  
+
+`source /path/to/miniconda3/etc/profile.d/conda.sh`
+
+#Activate conda environment
+
+`conda activate samtools`
+
+#Specify where SAMtools is installed
+
+`/path/to/miniconda3/envs/samtools/bin/samtools`
+
+#Change directory to where files are located
+
+`cd /path/to/files/`
+
+`cat sample_list.txt | parallel "samtools view -q 20 -bt /path/to/reference.fasta {}.sam -o /path/to/bam_files/{}.bam"`
+
+SAMtools view script without notes can be found [here]()
