@@ -33,22 +33,6 @@ Install FastQC in the FastQC conda environment:
 ## Run FastQC 🏃‍♀️
 FastQC is a tool that analyzes raw sequence data from high throughput sequencing to identify potential issues. We will use the output to determine if any samples need to be removed from our analysis and will help us determine our trimming parameters later. FastQC can be run on zipped fasta files so if your files are zipped, you don't have to unzip them. 
 
-`#!/bin/bash`
-
-`#SBATCH -N 1`
-
-`#SBATCH -n 17`
-
-`#SBATCH -t 00:40:00`
-
-`#SBATCH -p single`
-
-`#SBATCH -A Allocation name` 
-
-`#SBATCH -o fastqc_[date].out`
-
-`#SBATCH -e fastqc_[date].err`
-
 #This script will be run in parallel
 
 `module load parallel/20190222/intel-19.0.5`
@@ -115,23 +99,10 @@ Install Trim Galore in the Trim Galore conda environment:
 `conda install -c bioconda trim_galore`
 
 ## Run Trim Galore ✂️
-`trim_galore` parameters will depend on FastQC results. High quality sequence data may allow for more stringent paramenters whereas average sequence quality may require you to relax some parameters to prevent throwing out the majority of your reads. 
+`trim_galore` parameters will depend on FastQC results. High quality sequence data may allow for more stringent paramenters whereas average sequence quality may require you to relax some parameters to prevent throwing out the majority of your reads.
 
-`#!/bin/bash`
+`--paired` This option performs length trimming of quality/adapter/RRBS trimmed reads for paired-end files. To pass the validation test, both sequences of a sequence pair are required to have a certain minimum length which is governed by the option `--length` (default 20bp). If only one read passes this length threshold the other read can be rescued; `-q` Trim low-quality ends from reads in addition to adapter removal. For RRBS samples, quality trimming will be performed first, and adapter trimming is carried in a second round. Other files are quality and adapter trimmed in a single pass. The algorithm is the same as the one used by BWA (Subtract INT from all qualities; compute partial sums from all indices to the end of the sequence; cut sequence at the index at which the sum is minimal). 
 
-`#SBATCH -N 1`
-
-`#SBATCH -n 48`
-
-`#SBATCH -t 04:00:00`
-
-`#SBATCH -p workq`
-
-`#SBATCH -A Allocation name`
-
-`#SBATCH -o trim_[date].out`
-
-`#SBATCH -e trim_[date].err`
 
 #This script will be run in parallel
 
@@ -154,10 +125,9 @@ Install Trim Galore in the Trim Galore conda environment:
 `cd /path/to/files/`
 
 
-
 `cat sample_list.txt | parallel "trim_galore --paired -q 20  --dont_gzip  {}_R1_001.fastq.gz {}_R2_001.fastq.gz -o /path/to/trim_galore/"`
 
-Trim Galore script without notes can be found [here]()
+Trim Galore script without notes can be found [here](trim_galore.sh)
 
 ## Run FastQC/MultiQC again to make sure trimming was successful 👍
 This can also help determine if there are any samples that you'd like to remove or resequence before further analysis. 
@@ -166,6 +136,31 @@ This can also help determine if there are any samples that you'd like to remove 
 If your reference isn't already indexed, you can use code found [here](Pipeline.md)
 
 ## Align Reads to Reference Genome with BWA mem 📖
+Trimmed reads will now be aligned to our indexed reference genome using BWA mem. To align using BWA mem your reference genome must be indexed using BWA index. Make sure all indexed outputs are in the same directory. 
+
+`-M` Mark shorter split hits as secondary (for Picard compatibility); `-t` Number of threads; `-v` Control the verbose level of the output. This option has not been fully supported throughout BWA. Ideally, a value 0 for disabling all the output to stderr; 1 for outputting errors only; 2 for warnings and errors; 3 for all normal messages; 4 or higher for debugging. When this option takes value 4, the output is not SAM. [3]
+
+#This script will be run in parallel
+
+`module load parallel/20190222/intel-19.0.5`
+
+#Specify where conda is installed  
+
+`source /path/to/miniconda3/etc/profile.d/conda.sh`
+
+conda activate bwa
+
+#Specify where BWA is installed
+
+`/path/to/miniconda3/envs/bwa/bin/bwa`
+
+#Change directory to where files are located
+
+`cd /path/to/files/`
+
+`cat sample_list.txt | parallel "bwa mem -M -t 10 -v 3 /path/to/reference.fasta {}val_1.fq {}val_2.fq > /path/to/bwa/{}.sam 2> /path/to/bwa/{}.mem.log"`
+                                                               
+
 
 
 
