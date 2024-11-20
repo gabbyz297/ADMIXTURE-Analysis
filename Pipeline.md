@@ -203,4 +203,32 @@ Next we will convert our SAM files to BAM files for downstream analyses using SA
 
 `cat sample_list.txt | parallel "samtools view -q 20 -bt /path/to/reference.fasta {}.sam -o /path/to/bam_files/{}.bam"`
 
-SAMtools view script without notes can be found [here]()
+SAMtools view script without notes can be found [here](samtools_view.sh)
+
+##Check Alignment Stats with SAMtools
+BWA doesn't output it's own alignment stats so this step will allow us to check how many reads BWA was able to map to our reference.
+
+#This script will be run in parallel
+
+`module load parallel/20190222/intel-19.0.5`
+
+#Specify where conda is installed  
+
+`source /path/to/miniconda3/etc/profile.d/conda.sh`
+
+#Activate conda environment
+
+`conda activate samtools`
+
+#Specify where SAMtools is installed
+
+`/path/to/miniconda3/envs/samtools/bin/samtools`
+
+#Change directory to where files are located
+
+`cd /path/to/files/`
+
+`cat /path/to/sample_list.txt | parallel "samtools flagstat {}.bam -O /path/to/bam_files/{}.bam_stat"`
+
+SAMtools flagstat script without notes can be found [here]()
+
