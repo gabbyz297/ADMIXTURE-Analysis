@@ -230,5 +230,5 @@ BWA doesn't output it's own alignment stats so this step will allow us to check 
 
 `cat /path/to/sample_list.txt | parallel "samtools flagstat {}.bam -O /path/to/bam_files/{}.bam_stat"`
 
-SAMtools flagstat script without notes can be found [here]()
+SAMtools flagstat script without notes can be found [here](samtools_flagstat.sh)
 
