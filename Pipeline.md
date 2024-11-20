@@ -160,7 +160,7 @@ conda activate bwa
 
 `cat sample_list.txt | parallel "bwa mem -M -t 10 -v 3 /path/to/reference.fasta {}val_1.fq {}val_2.fq > /path/to/bwa/{}.sam 2> /path/to/bwa/{}.mem.log"`
                                                                
-
+BWA script without notes can be found [here]()
 
 
 
