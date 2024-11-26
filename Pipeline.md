@@ -232,3 +232,27 @@ BWA doesn't output it's own alignment stats so this step will allow us to check 
 
 SAMtools flagstat script without notes can be found [here](samtools_flagstat.sh)
 
+## Assign Reads to Read-Groups with Picard Tools 📑
+
+Picard Tools is compatible with GATK, the program we will be using to genotype, so we will use Picard Tools to assign our reads to read groups, based on sequencing lane.
+
+`I` specifies input files, `O` specifies output files, `TMP_DIR` creates a temporary directory, `SO` is the optional sort order to output in, `RGID` is the read group ID, `RGLB` is the read group library, `RGPL` is the read group platform, `RGPU` is the read group platform unit, and `RGSM` is the read group sample name. 
+
+#Download Picard tools jar file.
+You can download the jar file to run picard tools [here](https://github.com/broadinstitute/picard/releases/tag/3.3.0)
+
+#This script will be run in parallel
+
+`module load parallel/20190222/intel-19.0.5`
+
+#Change directory to where files are located
+
+`cd /path/to/files/`
+
+#Create a temporary directory for intermediate files
+
+`TMP_DIR=$PWD/tmp`
+
+`cat sample_list.txt | parallel "java -jar /path/to/picard.jar AddOrReplaceReadGroups I={}.bam O={}tag.bam TMP_DIR=$PWD/tmp SO=coordinate RGID={}.bam RGLB=1 RGPL=illumina RGPU=1 RGSM={}.bam"`
+
+Picard Tools assign read groups script without notes can be found [here]()
