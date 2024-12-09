@@ -256,3 +256,7 @@ You can download the jar file to run picard tools [here](https://github.com/broa
 `cat sample_list.txt | parallel "java -jar /path/to/picard.jar AddOrReplaceReadGroups I={}.bam O={}tag.bam TMP_DIR=$PWD/tmp SO=coordinate RGID={}.bam RGLB=1 RGPL=illumina RGPU=1 RGSM={}.bam"`
 
 Picard Tools assign read groups script without notes can be found [here]()
+
+
+
+### 🚧 This Pipeline is still in Progress 🏗️
