@@ -241,19 +241,17 @@ Picard Tools is compatible with GATK, the program we will be using to genotype, 
 #Download Picard tools jar file.
 You can download the jar file to run picard tools [here](https://github.com/broadinstitute/picard/releases/tag/3.3.0)
 
-#This script will be run in parallel
+#Change directory to location of BAM files
 
-`module load parallel/20190222/intel-19.0.5`
+`cd /path/to/bam_files/`
 
-#Change directory to where files are located
-
-`cd /path/to/files/`
-
-#Create a temporary directory for intermediate files
+#Create temporary directory for intermediate files
 
 `TMP_DIR=$PWD/tmp`
 
-`cat sample_list.txt | parallel "java -jar /path/to/picard.jar AddOrReplaceReadGroups I={}.bam O={}tag.bam TMP_DIR=$PWD/tmp SO=coordinate RGID={}.bam RGLB=1 RGPL=illumina RGPU=1 RGSM={}.bam"`
+#Use for loop to loop through directory of BAM files and assign reads to read groups.
+
+`for i in /path/to/bam_files/*.bam; do java -jar /path/to/picard.jar AddOrReplaceReadGroups I=$i O=${i%.bam}.tag.bam MAX_RECORDS_IN_RAM=1000000 TMP_DIR=$PWD/tmp SO=coordinate RGID=${i%.bam} RGLB=1 RGPL=illumina RGPU=1 RGSM=${i%.bam}; done`
 
 Picard Tools assign read groups script without notes can be found [here]()
 
