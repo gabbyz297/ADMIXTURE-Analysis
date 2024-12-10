@@ -255,7 +255,7 @@ You can download the jar file to run picard tools [here](https://github.com/broa
 
 Picard Tools assign read groups script without notes can be found [here](picard_readgroups.sh)
 
-## Remove PCR Duplicates with Picard tools
+## Remove PCR Duplicates with Picard tools ✂️
 
 
 Since Picard tools is compatible with GATK we will use it to remove PCR artifacts as well. 
