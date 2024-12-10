@@ -274,6 +274,6 @@ Since Picard tools is compatible with GATK we will use it to remove PCR artifact
 
 `for i in /path/to/bam_files/*.tag.bam;  do java -jar /path/to/picard.jar MarkDuplicates I=$i O=${i%.tag.bam}.rmdup.bam MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=6000 MAX_RECORDS_IN_RAM=1000000 TMP_DIR=$PWD/temp METRICS_FILE=${i%.tag.bam}.rmdup.metrics ASSUME_SORTED=true; done`
 
-Picard Tools assign remove PCR duplicate script without notes can be found [here]()
+Picard Tools assign remove PCR duplicate script without notes can be found [here](picard_rmpcrdup.sh)
 
 ### 🚧 This Pipeline is still in Progress 🏗️
