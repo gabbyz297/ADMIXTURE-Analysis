@@ -253,8 +253,27 @@ You can download the jar file to run picard tools [here](https://github.com/broa
 
 `for i in /path/to/bam_files/*.bam; do java -jar /path/to/picard.jar AddOrReplaceReadGroups I=$i O=${i%.bam}.tag.bam MAX_RECORDS_IN_RAM=1000000 TMP_DIR=$PWD/tmp SO=coordinate RGID=${i%.bam} RGLB=1 RGPL=illumina RGPU=1 RGSM=${i%.bam}; done`
 
-Picard Tools assign read groups script without notes can be found [here]()
+Picard Tools assign read groups script without notes can be found [here](picard_readgroups.sh)
+
+## Remove PCR Duplicates with Picard tools
 
 
+Since Picard tools is compatible with GATK we will use it to remove PCR artifacts as well. 
+
+`MAX_FILE_HANDLES_FOR_READ_ENDS_MAP` Maximum number of file handles to keep open when spilling read ends to disk, `MAX_RECORDS_IN_RAM` When writing files that need to be sorted, this will specify the number of records stored in RAM before spilling to disk, `TMP_DIR` One or more directories with space available to be used by this program for temporary storage of working files, `METRICS_FILE` File to write duplication metrics to, `ASSUME_SORTED` If true, assume that the input file is coordinate sorted even if the header says otherwise.
+
+#Change directory to location of BAM files
+
+`cd /path/to/bam_files/`
+
+#Set temporary working directory
+
+`TMP_DIR=$PWD/temp`
+
+#Use for loop to loop through BAM files and remove PCR duplicates 
+
+`for i in /path/to/bam_files/*.tag.bam;  do java -jar /path/to/picard.jar MarkDuplicates I=$i O=${i%.tag.bam}.rmdup.bam MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=6000 MAX_RECORDS_IN_RAM=1000000 TMP_DIR=$PWD/temp METRICS_FILE=${i%.tag.bam}.rmdup.metrics ASSUME_SORTED=true; done`
+
+Picard Tools assign remove PCR duplicate script without notes can be found [here]()
 
 ### 🚧 This Pipeline is still in Progress 🏗️
