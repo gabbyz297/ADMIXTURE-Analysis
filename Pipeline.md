@@ -276,4 +276,31 @@ Since Picard tools is compatible with GATK we will use it to remove PCR artifact
 
 Picard Tools assign remove PCR duplicate script without notes can be found [here](picard_rmpcrdup.sh)
 
+## Index filtered files using Samtools :open_book:
+Next filtered files will be indexed for realignment with `samtools`
+
+#This script will be run in parallel
+
+`module load parallel/20190222/intel-19.0.5`
+
+#Specify where conda is installed  
+
+`source /path/to/miniconda3/etc/profile.d/conda.sh`
+
+#Activate conda environment
+
+`conda activate samtools`
+
+#Specify where SAMtools is installed
+
+`/path/to/miniconda3/envs/samtools/bin/samtools`
+
+#Change directory to where files are located
+
+`cd /path/to/files/`
+
+`cat sample_list.txt | parallel "samtools index {}.bam -o {}.index.bam"`
+
+SAMtools index script without notes can be found [here]()
+
 ### 🚧 This Pipeline is still in Progress 🏗️
