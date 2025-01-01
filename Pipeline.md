@@ -333,4 +333,33 @@ We will write a script calling GATK that we will use later when we run our paral
 
 GATK create GVCF file linear script without notes can be found [here](gatk_create_gvcf_linear.sh)
 
+### Create a text file with list of paths to reference genome and each sample's file
+
+
+
+### Create parallel script to run GATK HaplotypeCaller
+We will use GATK HaplotypeCaller to create a GVCF file for each BAM file
+
+#Run 4 jobs at a time
+`export JOBS_PER_NODE=4`
+
+#This script will be run in parallel
+
+`module load parallel/20190222/intel-19.0.5`
+
+#Change directory to where files are located
+
+`cd /path/to/files/`
+
+`parallel --colsep '\,' \
+        --progress \
+        --joblog logfile.haplotype_gvcf.$SLURM_JOBID \
+        -j $JOBS_PER_NODE \
+        --workdir $SLURM_SUBMIT_DIR \
+        -a bams-to-haplotype-call.txt \
+        /path/to/gatk_create_gvcf.sh {$1}`
+
+
+
+
 ### 🚧 This Pipeline is still in Progress 🏗️
