@@ -301,6 +301,8 @@ Next filtered files will be indexed for realignment with `samtools`
 
 `cat sample_list.txt | parallel "samtools index {}.bam -o {}.index.bam"`
 
-SAMtools index script without notes can be found [here]()
+SAMtools index script without notes can be found [here](samtools_view.sh)
+
+
 
 ### 🚧 This Pipeline is still in Progress 🏗️
