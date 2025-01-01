@@ -303,6 +303,34 @@ Next filtered files will be indexed for realignment with `samtools`
 
 SAMtools index script without notes can be found [here](samtools_view.sh)
 
+## Create GVCF files using GATK :file_folder:
+Next we will convert filtered BAM files to GVCF files which will create VCF formatted files without genotypes
 
+### Create GATK script to run in parallel
+We will write a script calling GATK that we will use later when we run our parallel script. This is the most computationally intense step which requires us to use parallel a little differently than in previous scripts.
+
+`#!/bin/bash`
+
+#Create temp directory to save space
+
+`OUTPUT=temp-gvcf`
+
+#Specify where you have GATK and Java (required version 17+) installed
+`export PATH="/path/to/gatk-4.4.0.0/:$PATH"`
+`export PATH="/path/to/jdk-17.0.6/bin:$PATH"`
+
+#Specifity flags for GATK scripts
+
+`REFERENCE=$1`
+`INPUT=$2`
+`FILENAME=$(basename -- "$INPUT")`
+`FILENAME_PART="${FILENAME%.*}"`
+`OUT1=/path/to/vcf_files/$FILENAME.g.vcf.gz`
+
+#Write GATK script in linear format using flags specified above
+
+`gatk --java-options "-Xmx16G -XX:ParallelGCThreads=4" HaplotypeCaller --ERC GVCF -R $REFERENCE -I $INPUT -O $OUT1 --min-base-quality-score 20`
+
+GATK create GVCF file linear script without notes can be found [here]()
 
 ### 🚧 This Pipeline is still in Progress 🏗️
