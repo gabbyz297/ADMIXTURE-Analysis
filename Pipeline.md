@@ -335,7 +335,11 @@ GATK create GVCF file linear script without notes can be found [here](gatk_creat
 
 ### Create a text file with list of paths to reference genome and each sample's file
 
+#Run on command line
 
+`REFERENCE=/path/to/reference.fasta`
+
+`for BAM in /path/to/*.bam; do echo "$REFERENCE,$BAM" >> bams-to-haplotype-call.txt; done`
 
 ### Create parallel script to run GATK HaplotypeCaller
 We will use GATK HaplotypeCaller to create a GVCF file for each BAM file
