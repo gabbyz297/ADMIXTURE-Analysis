@@ -331,6 +331,6 @@ We will write a script calling GATK that we will use later when we run our paral
 
 `gatk --java-options "-Xmx16G -XX:ParallelGCThreads=4" HaplotypeCaller --ERC GVCF -R $REFERENCE -I $INPUT -O $OUT1 --min-base-quality-score 20`
 
-GATK create GVCF file linear script without notes can be found [here]()
+GATK create GVCF file linear script without notes can be found [here](gatk_create_gvcf_linear.sh)
 
 ### 🚧 This Pipeline is still in Progress 🏗️
