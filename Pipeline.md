@@ -333,7 +333,7 @@ We will write a script calling GATK that we will use later when we run our paral
 
 GATK create GVCF file linear script without notes can be found [here](gatk_create_gvcf_linear.sh)
 
-### Create a text file with list of paths to reference genome and each sample's file
+### Create a text file with list of paths to reference genome and each sample's file 🗃️
 
 #Run on command line
 
@@ -341,7 +341,7 @@ GATK create GVCF file linear script without notes can be found [here](gatk_creat
 
 `for BAM in /path/to/*.bam; do echo "$REFERENCE,$BAM" >> bams-to-haplotype-call.txt; done`
 
-### Create parallel script to run GATK HaplotypeCaller
+### Create parallel script to run GATK HaplotypeCaller 📁
 We will use GATK HaplotypeCaller to create a GVCF file for each BAM file
 
 #Run 4 jobs at a time
@@ -351,7 +351,7 @@ We will use GATK HaplotypeCaller to create a GVCF file for each BAM file
 
 `module load parallel/20190222/intel-19.0.5`
 
-#Change directory to where files are located
+#Change directory to where files are located 🗃
 
 `cd /path/to/files/`
 
@@ -363,7 +363,27 @@ We will use GATK HaplotypeCaller to create a GVCF file for each BAM file
         -a bams-to-haplotype-call.txt \
         /path/to/gatk_create_gvcf.sh {$1}`
 
+## Combine GVCF files for Genotyping 📦
+Now that we have our GVCF files we can combine them into a multi-sample GVCF file to group samples by population (or however else you'd like) and genotype them together. 
+
+#This script will run linear
+
+#Change directory to location of GVCF files
+`cd /path/to/files/`
+
+#List samples to be combined in your GVCF file using the `-V` flag
+
+`gatk CombineGVCFs -R /path/to/reference.fa -V sample_1.g.vcf.gz -V sample_2.g.vcf.gz -O all_samples.gvcf`
 
 
+## Genotype GVCF Files 
+It's finally time to genotype! We will create our multi-sample VCF file with GATK.
+
+#This script will run linear
+
+#Change directory to location of combined GVCF file
+`cd /path/to/files/`
+
+`gatk CombineGVCFs -R /path/to/reference.fa -V sample_1.g.vcf.gz`
 
 ### 🚧 This Pipeline is still in Progress 🏗️
