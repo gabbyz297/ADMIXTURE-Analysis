@@ -363,6 +363,8 @@ We will use GATK HaplotypeCaller to create a GVCF file for each BAM file
         -a bams-to-haplotype-call.txt \
         /path/to/gatk_create_gvcf.sh {$1}`
 
+GATK create GVCF file parallel without notes can be found [here]()
+
 ## Combine GVCF files for Genotyping 📦
 Now that we have our GVCF files we can combine them into a multi-sample GVCF file to group samples by population (or however else you'd like) and genotype them together. 
 
@@ -375,6 +377,7 @@ Now that we have our GVCF files we can combine them into a multi-sample GVCF fil
 
 `gatk CombineGVCFs -R /path/to/reference.fa -V sample_1.g.vcf.gz -V sample_2.g.vcf.gz -O all_samples.gvcf`
 
+GATK combine GVCF script without notes can be found [here](gatk_combine_gvcf_linear.sh)
 
 ## Genotype GVCF Files 
 It's finally time to genotype! We will create our multi-sample VCF file with GATK.
