@@ -389,6 +389,6 @@ It's finally time to genotype! We will create our multi-sample VCF file with GAT
 
 `gatk CombineGVCFs -R /path/to/reference.fa -V all_samples.g.vcf -O all_samples.vcf`
 
-GATK genotype GVCF script eithout notes can be found [here]()
+GATK genotype GVCF script eithout notes can be found [here](gatk_genotype_gvcf_linear.sh)
 
 ### 🚧 This Pipeline is still in Progress 🏗️
