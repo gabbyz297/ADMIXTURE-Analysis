@@ -99,7 +99,7 @@ Activate the Trimmomatic conda environment:
 Install Trimmomatic in the Trimmomatic conda environment: 
 `conda install -c bioconda trimmomatic`
 
-## Run Trim Galore ✂️
+## Run Trimmomatic ✂️
 `trimmomatic` parameters will depend on FastQC results. High quality sequence data may allow for more stringent paramenters whereas average sequence quality may require you to relax some parameters to prevent throwing out the majority of your reads.
 
 `PE` This option runs trimmomatic in paired end mode for forward and reverse reads. This creates 4 output files 2 for the 'paired'
@@ -130,7 +130,7 @@ read did not. `LEADING` and `TRAILING` removes low quality bases at the beginnin
 
 `cat sample_list.txt | parallel "trimmomatic PE {}1.fq.gz {}2.fq.gz /path/to/{}.1P.fq /path/to/{}.1U.fq /path/to/{}.2P.fq /path/to/{}.2U.fq LEADING:5 TRAILING:5 SLIDINGWINDOW:4:15 MINLEN:60"`
 
-Trimmomatic script without notes can be found [here]()
+Trimmomatic script without notes can be found [here](trimmomatic_parallel.sh)
 
 ## Run FastQC/MultiQC again to make sure trimming was successful 👍
 This can also help determine if there are any samples that you'd like to remove or resequence before further analysis. 
