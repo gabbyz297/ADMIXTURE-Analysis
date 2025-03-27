@@ -87,22 +87,24 @@ To compile `html` outputs into one `html` file, run MultiQC in the directory tha
 `multiqc .`
 
 
-## Install Trim Galore using Miniconda 🐍
-`trim_galore` removes adaptors and trims reads based on a specified quality score. 
+## Install Trimmomatic using Miniconda 🐍
+`trimmomatic` removes adaptors and trims reads based on a specified quality scores. 
 
-Create a conda environment to install Trim Galore into: 
-`conda create -n trim_galore`
+Create a conda environment to install Trimmomatic into: 
+`conda create -n trimmomatic`
 
-Activate the Trim Galore conda environment: 
-`conda activate trim_galore`
+Activate the Trimmomatic conda environment: 
+`conda activate trimmomatic`
 
-Install Trim Galore in the Trim Galore conda environment: 
-`conda install -c bioconda trim_galore`
+Install Trimmomatic in the Trimmomatic conda environment: 
+`conda install -c bioconda trimmomatic`
 
 ## Run Trim Galore ✂️
-`trim_galore` parameters will depend on FastQC results. High quality sequence data may allow for more stringent paramenters whereas average sequence quality may require you to relax some parameters to prevent throwing out the majority of your reads.
+`trimmomatic` parameters will depend on FastQC results. High quality sequence data may allow for more stringent paramenters whereas average sequence quality may require you to relax some parameters to prevent throwing out the majority of your reads.
 
-`--paired` This option performs length trimming of quality/adapter/RRBS trimmed reads for paired-end files. To pass the validation test, both sequences of a sequence pair are required to have a certain minimum length which is governed by the option `--length` (default 20bp). If only one read passes this length threshold the other read can be rescued; `-q` Trim low-quality ends from reads in addition to adapter removal. For RRBS samples, quality trimming will be performed first, and adapter trimming is carried in a second round. Other files are quality and adapter trimmed in a single pass. The algorithm is the same as the one used by BWA (Subtract INT from all qualities; compute partial sums from all indices to the end of the sequence; cut sequence at the index at which the sum is minimal). 
+`PE` This option runs trimmomatic in paired end mode for forward and reverse reads. This creates 4 output files 2 for the 'paired'
+output where both reads survived the processing, and 2 for corresponding 'unpaired' output where a read survived, but the partner 
+read did not. `LEADING` and `TRAILING` removes low quality bases at the beginning and the end of a read. `SLIDINGWINDOW` uses a sliding window of a set number of bases and trims once the average quality falls below the set threshold. 
 
 
 #This script will be run in parallel
@@ -115,20 +117,20 @@ Install Trim Galore in the Trim Galore conda environment:
 
 #Activate conda environment
 
-`conda activate trim_galore`
+`conda activate trimmomatic`
 
-#Specify where Trim Galore is installed
+#Specify where Trimmomatic is installed
 
-`/path/to/miniconda3/envs/trim_galore/bin/trim_galore`
+`/path/to/miniconda3/envs/trimmomatic/bin/trimmomatic`
 
 #Change directory to where files are located
 
 `cd /path/to/files/`
 
 
-`cat sample_list.txt | parallel "trim_galore --paired -q 20  --dont_gzip  {}_R1_001.fastq.gz {}_R2_001.fastq.gz -o /path/to/trim_galore/"`
+`cat sample_list.txt | parallel "trimmomatic PE {}1.fq.gz {}2.fq.gz /path/to/{}.1P.fq /path/to/{}.1U.fq /path/to/{}.2P.fq /path/to/{}.2U.fq LEADING:5 TRAILING:5 SLIDINGWINDOW:4:15 MINLEN:60"`
 
-Trim Galore script without notes can be found [here](trim_galore.sh)
+Trimmomatic script without notes can be found [here]()
 
 ## Run FastQC/MultiQC again to make sure trimming was successful 👍
 This can also help determine if there are any samples that you'd like to remove or resequence before further analysis. 
