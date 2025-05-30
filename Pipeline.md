@@ -391,6 +391,21 @@ It's finally time to genotype! We will create our multi-sample VCF file with GAT
 
 `gatk CombineGVCFs -R /path/to/reference.fa -V all_samples.g.vcf -O all_samples.vcf`
 
-GATK genotype GVCF script eithout notes can be found [here](gatk_genotype_gvcf_linear.sh)
+GATK genotype GVCF script without notes can be found [here](gatk_genotype_gvcf_linear.sh)
+
+## Select SNPs with GATK
+GATK allows you to select for specific variants using `SelectVariants` to select SNPs MNPs or INDELS.
+
+#Change directory to location of genotyped combined VCF file
+`cd /path/to/files/`
+
+#Select SNPs usung the `select-type-to-include` flag. Use `exclude-non-variants` to exclude non-polymorphic sites. `set-filtered-gt-to-nocall` converts filtered sites to ./. or no calls. 
+`/path/to/gatk-4.1.2.0/gatk SelectVariants --variant /path/to/file/combined.vcf -R /path/to/reference/.fa --output /path/to/file/file2.vcf --select-type-to-include SNP --exclude-non-variants true --set-filtered-gt-to-nocall true`
+
+GATK select SNP script without notes can be found [here]()
+
+## Determine the frequecy of missing data with VCFtools 🎯
+
+
 
 ### 🚧 This Pipeline is still in Progress 🏗️
