@@ -393,7 +393,7 @@ It's finally time to genotype! We will create our multi-sample VCF file with GAT
 
 GATK genotype GVCF script without notes can be found [here](gatk_genotype_gvcf_linear.sh)
 
-## Select SNPs with GATK
+## Select SNPs with GATK 🫵
 GATK allows you to select for specific variants using `SelectVariants` to select SNPs MNPs or INDELS.
 
 #Change directory to location of genotyped combined VCF file
@@ -402,7 +402,26 @@ GATK allows you to select for specific variants using `SelectVariants` to select
 #Select SNPs usung the `select-type-to-include` flag. Use `exclude-non-variants` to exclude non-polymorphic sites. `set-filtered-gt-to-nocall` converts filtered sites to ./. or no calls. 
 `/path/to/gatk-4.1.2.0/gatk SelectVariants --variant /path/to/file/combined.vcf -R /path/to/reference/.fa --output /path/to/file/file2.vcf --select-type-to-include SNP --exclude-non-variants true --set-filtered-gt-to-nocall true`
 
-GATK select SNP script without notes can be found [here]()
+GATK select SNP script without notes can be found [here](gatk_select_variants.sh)
+
+## Quality filter variants with GATK
+GATK allows for several different highly customizable filters for quality controlling your genotyped VCF file, from removing sites with low coverage to removing sequencing artifacts. 
+
+`ReadPosRankSum` compares whether positions of reference and alternate alleles are different within reads, `MQRankSum` compares mapping qualities of reads supporting the reference allele and alternate allele, `FS` Phred-scaled probability that there is strand bias at the site. `FS` value will be close to 0 when there is little to no strand bias at the site, `QD` is the variant confidence divided by the unfiltered depth of samples. This normalizes the variant quality in order to avoid inflation caused when there is deep coverage, `DP` is genotype depth of coverage
+
+#Change directory to location of VCF file
+`cd /path/to/files/`
+
+#Call your VCF file and you reference genome
+
+`/path/to/gatk-4.1.2.0/gatk VariantFiltration --variant /path/to/file/file.vcf --output /path/to/file/file.vcf -R /path/to/reference/.fa`
+
+#Create filters and their threshold cutoffs
+
+`--filter-name "ReadPosRankSum_filter" \ --filter-expression "ReadPosRankSum < -8.0" \ --filter-name "MQRankSum_filter" \ --filter-expression "MQRankSum < -12.5" \ --filter-name "FS_filter" \ --filter-expression "FS > 60.0" \ --filter-name "QD_filter" \ --filter-expression "QD < 2.0" \ --genotype-filter-name "DP8filter" \ --genotype-filter-expression "DP < 8" 2>/dev/null`
+
+GATK filter script without notes can be found [here]()
+
 
 ## Determine the frequecy of missing data with VCFtools 🎯
 
