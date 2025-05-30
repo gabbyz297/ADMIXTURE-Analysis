@@ -404,7 +404,7 @@ GATK allows you to select for specific variants using `SelectVariants` to select
 
 GATK select SNP script without notes can be found [here](gatk_select_variants.sh)
 
-## Quality filter variants with GATK
+## Flag variants with GATK
 GATK allows for several different highly customizable filters for quality controlling your genotyped VCF file, from removing sites with low coverage to removing sequencing artifacts. 
 
 `ReadPosRankSum` compares whether positions of reference and alternate alleles are different within reads, `MQRankSum` compares mapping qualities of reads supporting the reference allele and alternate allele, `FS` Phred-scaled probability that there is strand bias at the site. `FS` value will be close to 0 when there is little to no strand bias at the site, `QD` is the variant confidence divided by the unfiltered depth of samples. This normalizes the variant quality in order to avoid inflation caused when there is deep coverage, `DP` is genotype depth of coverage
@@ -420,7 +420,21 @@ GATK allows for several different highly customizable filters for quality contro
 
 `--filter-name "ReadPosRankSum_filter" \ --filter-expression "ReadPosRankSum < -8.0" \ --filter-name "MQRankSum_filter" \ --filter-expression "MQRankSum < -12.5" \ --filter-name "FS_filter" \ --filter-expression "FS > 60.0" \ --filter-name "QD_filter" \ --filter-expression "QD < 2.0" \ --genotype-filter-name "DP8filter" \ --genotype-filter-expression "DP < 8" 2>/dev/null`
 
-GATK filter script without notes can be found [here]()
+GATK filter script without notes can be found [here](gatk_filter.sh)
+
+## Removed flagged variants with GATK 🗑️
+`SelectVariants` will remove all the variants that were flagged by `VariantFiltration`
+
+#Load Java
+`module load jdk/1.8.0_262/intel-19.0.5`
+
+#Change directory to location of VCF file
+`cd /path/to/files/`
+
+`/path/to/gatk-4.1.2.0/gatk SelectVariants -R /path/to/reference/.fa --variant /path/to/file/file.vcf --output /path/to/file/file.vcf --set-filtered-gt-to-nocall true`
+
+GATK filtered variants script without notes can be found [here]()
+
 
 
 ## Determine the frequecy of missing data with VCFtools 🎯
