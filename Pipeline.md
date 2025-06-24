@@ -478,6 +478,12 @@ Histogram script without notes can be found [here](imiss_histogram.r)
 
 `/path/to/vcftools/bin/vcftools --vcf file.vcf --remove "remove_above_0.6.txt" --recode --recode-INFO-all --out file_filtered`
 
-VCFtools remove individuals script without notes can be found [here]()
+VCFtools remove individuals script without notes can be found [here](vcf_rm_indvs.sh)
+
+## Convert final VCF file to PLINK 1.9 files with VCFtools
+
+#PLINK will be used to run a PCA and ADMIXTURE accepts PLINK input files
+
+
 
 ### 🚧 This Pipeline is still in Progress 🏗️
