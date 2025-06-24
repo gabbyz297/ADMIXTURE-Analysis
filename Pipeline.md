@@ -510,6 +510,23 @@ Change directory to loaction of files
 Do not include the file extension in the input or output 
 `/path/to/plink2 --pedmap filename  --allow-extra-chr --out filename`
 
-PLINK 1.9 to PLINK 2.0 script without notes can be found [here]()
+PLINK 1.9 to PLINK 2.0 script without notes can be found [here](plink1.9_plink2.0.sh)
 
+## Calcuate allele frequencies (for sample sizes <50)
+
+This creates a table with allele frequencies output as a `.afreq` file, to account for differences in minor allele frequencies. PLINK 2.0 will require this file for small datasets
+
+Change directory to loaction of files
+`cd /path/to/files/`
+
+`/path/to/plink2 --pfile filename --allow-extra-chr --freq --out filename`
+
+PLINK 2.0 read frequency script without notes can be found [here]()
+
+## Run PCA in PLINK 2.0
+
+Now we can use the `.afreq` file in our PCA script
+
+Change directory to loaction of files
+`cd /path/to/files/`
 ### 🚧 This Pipeline is still in Progress 🏗️
