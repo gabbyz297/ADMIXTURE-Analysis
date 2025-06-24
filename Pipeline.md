@@ -480,7 +480,7 @@ Set the PERL5LIB environment variable to run VCFtools’ Perl scripts
 
 VCFtools remove individuals script without notes can be found [here](vcf_rm_indvs.sh)
 
-## Convert final VCF file to PLINK 1.9 files with VCFtools
+## Convert final VCF file to PLINK 1.9 files with VCFtools 🔃
 
 PLINK will be used to run a PCA and ADMIXTURE accepts PLINK input files
 
@@ -500,7 +500,7 @@ Set the PERL5LIB environment variable to run VCFtools’ Perl scripts
 
 VCF to PLINK 1.9 script without notes can be found [here](vcf2plink1.9.sh)
 
-## Convert PLINK 1.9 to PLINK 2.0
+## Convert PLINK 1.9 to PLINK 2.0 🔃
 
 We will be running our PCA in PLINK 2.0 but VCFtools currently only converts VCF files to PLINK 1.9 so we need this extra step to get to PLINK 2.0
 
@@ -512,7 +512,7 @@ Do not include the file extension in the input or output
 
 PLINK 1.9 to PLINK 2.0 script without notes can be found [here](plink1.9_plink2.0.sh)
 
-## Remove high LD SNPs
+## Remove high LD SNPs ⏫
 Before running a PCA and ADMIXTURE we will remove SNPs with high linkage disequilibrum (this is particularly helpful if you have a very large dataset like I do [42 million SNPs] as ADMIXTURE will print the enter genotype matrix during the cross validation step)
 
 Change directory to loaction of files
@@ -537,7 +537,7 @@ Change directory to loaction of files
 
 Make PFILE script without notes can be found [here](plink2_make_pgen.sh)
 
-## Calcuate allele frequencies (for sample sizes <50) to run a PCA in PLINK 2.0
+## Calcuate allele frequencies (for sample sizes <50) to run a PCA in PLINK 2.0 ⚛️
 
 This creates a table with allele frequencies output as a `.afreq` file, to account for differences in minor allele frequencies. PLINK 2.0 will require this file for small datasets
 
@@ -548,7 +548,7 @@ Change directory to loaction of files
 
 PLINK 2.0 read frequency script without notes can be found [here](plink2_read_freq.sh)
 
-## Run PCA in PLINK 2.0
+## Run PCA in PLINK 2.0 🏃‍♀️
 
 Now we can use the `.afreq` file in our PCA script
 
@@ -561,7 +561,7 @@ This run was done with 4 PCs due to low sample size but the default is 20
 
 PLINK 2.0 PCA script without notes can be found [here](plink2_pca.sh)
 
-## Visualize PCA in R 
+## Visualize PCA in R 🖼️
 
 Load data 
 `pca <- read.table("file.eigenvec",header=F)`
@@ -591,6 +591,49 @@ Plot PCA (Adjust V column numbers to your dataset)
                     legend.title=element_text(size=18)) +
  ggtitle("PCA")`
 
-PCA R script without notes can be found [here]()
+PCA R script without notes can be found [here](pca_plot.r)
+
+## Now we can run ADMIXTURE 🥳
+
+The first step is to run the cross validation to determine the optimal K value. This can be run using a range of K values determined by you. This script will be run in parallel. Our input file will be our BED file.
+
+Load GNU parallel
+`module load parallel/20190222/intel-19.0.5`
+
+Activate conda environment. I downloaded admixture prior to this step.
+
+`source /path/to/miniconda3/etc/profile.d/conda.sh`
+`conda activate admixture`
+
+Change directory to loaction of files
+`cd /path/to/files/`
+
+Create an output file to print cross validation results for all K values for easier reading and plotting
+`echo -e "K\tCV_Error" > cv_summary.txt`
+
+Run ADMIXTURE. The if else statement ensure that any errors or failed runs are still printed. 
+
+`run_admixture() {
+    K=$1
+    echo "Running K=$K" >&2
+    admixture --cv=10 -j2 /work/gabby297/batch2/plink_files/ALL_HAAM_final_q20_no-outliers_miss60_LD.bed ${K} > log_K${K}.out 2>&1`
+
+    CV_ERR=$(grep "CV error" log_K${K}.out | awk '{print $NF}')
+
+    if [[ -z "$CV_ERR" ]]; then
+        echo -e "${K}\tFAILED" > cv_K${K}.txt
+    else
+        echo -e "${K}\t${CV_ERR}" > cv_K${K}.txt
+    fi }
+
+`export -f run_admixture`
+
+Run 4 jobs in parallel using 2 threads each
+`parallel -j 4 run_admixture ::: {2..12}`
+
+Merge CV results
+`cat cv_K*.txt >> cv_summary.txt`
+
+ADMIXTURE cross validation script without notes can be found [here]()
 
 ### 🚧 This Pipeline is still in Progress 🏗️
