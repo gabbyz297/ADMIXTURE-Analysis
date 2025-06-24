@@ -616,7 +616,7 @@ Run ADMIXTURE. The if else statement ensure that any errors or failed runs are s
 `run_admixture() {
     K=$1
     echo "Running K=$K" >&2
-    admixture --cv=10 -j2 /work/gabby297/batch2/plink_files/ALL_HAAM_final_q20_no-outliers_miss60_LD.bed ${K} > log_K${K}.out 2>&1`
+    admixture --cv=10 -j2 /path/to/file.bed ${K} > log_K${K}.out 2>&1`
     
     CV_ERR=$(grep "CV error" log_K${K}.out | awk '{print $NF}')
 
@@ -628,12 +628,12 @@ Run ADMIXTURE. The if else statement ensure that any errors or failed runs are s
 
 `export -f run_admixture`
 
-Run 4 jobs in parallel using 2 threads each
+Run 4 jobs in parallel using 2 threads each. This runs cross validation on K values 2-12.
 `parallel -j 4 run_admixture ::: {2..12}`
 
 Merge CV results
 `cat cv_K*.txt >> cv_summary.txt`
 
-ADMIXTURE cross validation script without notes can be found [here]()
+ADMIXTURE cross validation script without notes can be found [here](admixture_crossval.sh)
 
 ### 🚧 This Pipeline is still in Progress 🏗️
