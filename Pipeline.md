@@ -498,6 +498,18 @@ Set the PERL5LIB environment variable to run VCFtools’ Perl scripts
 
 `/path/to/vcftools/bin/vcftools --vcf file.vcf  --chrom-map chrom-map.txt --out file --plink`
 
-VCF to PLINK 1.9 script without notes can be found [here]()
+VCF to PLINK 1.9 script without notes can be found [here](vcf2plink1.9.sh)
+
+## Convert PLINK 1.9 to PLINK 2.0
+
+We will be running our PCA in PLINK 2.0 but VCFtools currently only converts VCF files to PLINK 1.9 so we need this extra step to get to PLINK 2.0
+
+Change directory to loaction of files
+`cd /path/to/files/`
+
+Do not include the file extension in the input or output 
+`/path/to/plink2 --pedmap filename  --allow-extra-chr --out filename`
+
+PLINK 1.9 to PLINK 2.0 script without notes can be found [here]()
 
 ### 🚧 This Pipeline is still in Progress 🏗️
