@@ -512,6 +512,22 @@ Do not include the file extension in the input or output
 
 PLINK 1.9 to PLINK 2.0 script without notes can be found [here](plink1.9_plink2.0.sh)
 
+## Remove high LD SNPs
+Before running a PCA and ADMIXTURE we will remove SNPs with high linkage disequilibrum (this is particularly helpful if you have a very large dataset like I do [42 million SNPs] as ADMIXTURE will print the enter genotype matrix during the cross validation step)
+
+Change directory to loaction of files
+`cd /path/to/files/`
+
+Use a 50 bp sliding window moving incrementally 10bp to remove SNPs with an r-squared greater than 0.2 (I had to use the --bad-ld flag here beecause I'm working with less than 50 samples [47])
+
+`/path/to/plink2 --pfile filename --allow-extra-chr --bad-ld --indep-pairwise 50 10 0.2 --out pruned`
+
+Make a bed file that can be used for running ADMIXTURE
+
+`/path/to/plink2 --pfile filename --allow-extra-chr --extract pruned.prune.in --make-bed --out filename`
+
+PLINK LD script without notes can be found [here]()
+
 ## Calcuate allele frequencies (for sample sizes <50)
 
 This creates a table with allele frequencies output as a `.afreq` file, to account for differences in minor allele frequencies. PLINK 2.0 will require this file for small datasets
@@ -534,5 +550,9 @@ This run was done with 4 PCs due to low sample size but the default is 20
 
 `/path/to/plink2 --pfile filename --allow-extra-chr --read-freq file.afreq --pca 4  --out filename`
 
-PLINK 2.0 PCA script without notes can be found [here]()
+PLINK 2.0 PCA script without notes can be found [here](plink2_pca.sh)
+
+## Visualize PCA in R 
+
+
 ### 🚧 This Pipeline is still in Progress 🏗️
