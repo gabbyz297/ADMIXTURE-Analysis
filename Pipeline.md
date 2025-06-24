@@ -526,9 +526,18 @@ Make a bed file that can be used for running ADMIXTURE
 
 `/path/to/plink2 --pfile filename --allow-extra-chr --extract pruned.prune.in --make-bed --out filename`
 
-PLINK LD script without notes can be found [here]()
+PLINK LD script without notes can be found [here](plink2_ld.sh)
 
-## Calcuate allele frequencies (for sample sizes <50)
+## Create new PLINK 2.0 files using LD pruned BED file
+
+Change directory to loaction of files
+`cd /path/to/files/`
+
+`/path/to/plink2 --bfile filename --allow-extra-chr --make-pgen --out filename`
+
+Make PFILE script without notes can be found [here]()
+
+## Calcuate allele frequencies (for sample sizes <50) to run a PCA in PLINK 2.0
 
 This creates a table with allele frequencies output as a `.afreq` file, to account for differences in minor allele frequencies. PLINK 2.0 will require this file for small datasets
 
