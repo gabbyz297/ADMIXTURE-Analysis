@@ -521,7 +521,7 @@ Change directory to loaction of files
 
 `/path/to/plink2 --pfile filename --allow-extra-chr --freq --out filename`
 
-PLINK 2.0 read frequency script without notes can be found [here]()
+PLINK 2.0 read frequency script without notes can be found [here](plink2_read_freq.sh)
 
 ## Run PCA in PLINK 2.0
 
@@ -529,4 +529,10 @@ Now we can use the `.afreq` file in our PCA script
 
 Change directory to loaction of files
 `cd /path/to/files/`
+
+This run was done with 4 PCs due to low sample size but the default is 20
+
+`/path/to/plink2 --pfile filename --allow-extra-chr --read-freq file.afreq --pca 4  --out filename`
+
+PLINK 2.0 PCA script without notes can be found [here]()
 ### 🚧 This Pipeline is still in Progress 🏗️
