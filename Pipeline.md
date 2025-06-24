@@ -535,7 +535,7 @@ Change directory to loaction of files
 
 `/path/to/plink2 --bfile filename --allow-extra-chr --make-pgen --out filename`
 
-Make PFILE script without notes can be found [here]()
+Make PFILE script without notes can be found [here](plink2_make_pgen.sh)
 
 ## Calcuate allele frequencies (for sample sizes <50) to run a PCA in PLINK 2.0
 
@@ -563,5 +563,34 @@ PLINK 2.0 PCA script without notes can be found [here](plink2_pca.sh)
 
 ## Visualize PCA in R 
 
+Load data 
+`pca <- read.table("file.eigenvec",header=F)`
+
+`eigenval = scan("file.eigenval")`
+
+Calculate the percentage of variance explained (replace #4 with the number of PCs you have)
+`pve <- data.frame(PC = 1:4, pve = eigenval/sum(eigenval)*100)`
+
+Load GGPLOT
+`library(ggplot2)`
+
+Add a column with populations (you can also add this column before loading the dataset into R)
+
+'pca$Population <- c("pop1, "pop2", "pop3")`
+
+Plot PCA (Adjust V column numbers to your dataset)
+
+`ggplot(pca, aes(x= V3,y= V4, color=V7))  +`
+  `xlab("PC 1 (##%)") + ylab("PC 2 (##%)") +`
+ ` geom_point(size=8) +`
+ ` scale_color_manual(name= "Population", values=c("#E69F00", "#56B4E9", "#009E73",`
+ ` "#F0E442",  "#0072B2", "#D55E00", "#CC79A7", "#999999", "#9AD0F3", "#F7C59F", `
+ ` "#7CAE00", "#C77CFF")) +`
+  
+ ` theme_bw()+ theme(axis.text=element_text(size=20), axis.title=element_text(size=18,face="bold"),
+                    legend.title=element_text(size=18)) +
+ ggtitle("PCA")`
+
+PCA R script without notes can be found [here]()
 
 ### 🚧 This Pipeline is still in Progress 🏗️
