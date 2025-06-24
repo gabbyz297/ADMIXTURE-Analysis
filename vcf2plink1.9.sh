@@ -4,8 +4,8 @@
 #SBATCH -n 2
 #SBATCH -t 02:00:00
 #SBATCH -A loni_chiguiro25
-#SBATCH -o vcf_filter.out
-#SBATCH -e vcf_filter.err
+#SBATCH -o vcf_plink.out
+#SBATCH -e vcf_plink.err
 
 
 cd /work/gabby297/batch2/vcf_files/
