@@ -435,8 +435,6 @@ GATK filter script without notes can be found [here](gatk_filter.sh)
 
 GATK filtered variants script without notes can be found [here](gatk_filtered_variants.sh)
 
-
-
 ## Determine the frequecy of missing data with VCFtools 🎯
 
 #Set the PERL5LIB environment variable to run VCFtools’ Perl scripts.
@@ -448,5 +446,16 @@ GATK filtered variants script without notes can be found [here](gatk_filtered_va
 #This script will output the frequency of missing data for each sample in the VCF file `F_MISS` in a `.imiss` file. This output file can be used to create a histogram to visualize the frequency of missing data and aid in deciding a missingness threshold for filtering.
 
 VCFtools missing data script without notes can be found [here](vcf_missing_data.sh)
+
+## Visualize frequency of missing data in R
+
+#Load in `.imiss` file
+`miss <- read.table("file.imiss", header = TRUE)`
+
+#Plot histogram
+`hist(miss$F_MISS, breaks = 50, xlab = "Proportion of Missing Data", 
+     main = "Per-individual missing data")`
+
+Histogram script without notes can be found [here]()
 
 ### 🚧 This Pipeline is still in Progress 🏗️
