@@ -433,12 +433,20 @@ GATK filter script without notes can be found [here](gatk_filter.sh)
 
 `/path/to/gatk-4.1.2.0/gatk SelectVariants -R /path/to/reference/.fa --variant /path/to/file/file.vcf --output /path/to/file/file.vcf --set-filtered-gt-to-nocall true`
 
-GATK filtered variants script without notes can be found [here]()
+GATK filtered variants script without notes can be found [here](gatk_filtered_variants.sh)
 
 
 
 ## Determine the frequecy of missing data with VCFtools 🎯
 
+#Set the PERL5LIB environment variable to run VCFtools’ Perl scripts.
+`export PERL5LIB=/path/to/vcftools/src/perl` 
 
+
+`/path/to/vcftools/bin/vcftools --vcf /path/to/file/file.vcf --missing-indv --out /path/to/file/file`
+
+#This script will output the frequency of missing data for each sample in the VCF file `F_MISS` in a `.imiss` file. This output file can be used to create a histogram to visualize the frequency of missing data and aid in deciding a missingness threshold for filtering.
+
+VCFtools missing data script without notes can be found [here]()
 
 ### 🚧 This Pipeline is still in Progress 🏗️
