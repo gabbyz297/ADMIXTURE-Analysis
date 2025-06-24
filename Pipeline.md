@@ -447,6 +447,6 @@ GATK filtered variants script without notes can be found [here](gatk_filtered_va
 
 #This script will output the frequency of missing data for each sample in the VCF file `F_MISS` in a `.imiss` file. This output file can be used to create a histogram to visualize the frequency of missing data and aid in deciding a missingness threshold for filtering.
 
-VCFtools missing data script without notes can be found [here]()
+VCFtools missing data script without notes can be found [here](vcf_missing_data.sh)
 
 ### 🚧 This Pipeline is still in Progress 🏗️
