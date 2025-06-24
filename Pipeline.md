@@ -617,7 +617,7 @@ Run ADMIXTURE. The if else statement ensure that any errors or failed runs are s
     K=$1
     echo "Running K=$K" >&2
     admixture --cv=10 -j2 /work/gabby297/batch2/plink_files/ALL_HAAM_final_q20_no-outliers_miss60_LD.bed ${K} > log_K${K}.out 2>&1`
-
+    
     CV_ERR=$(grep "CV error" log_K${K}.out | awk '{print $NF}')
 
     if [[ -z "$CV_ERR" ]]; then
