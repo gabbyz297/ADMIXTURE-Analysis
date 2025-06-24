@@ -456,6 +456,28 @@ VCFtools missing data script without notes can be found [here](vcf_missing_data.
 `hist(miss$F_MISS, breaks = 50, xlab = "Proportion of Missing Data", 
      main = "Per-individual missing data")`
 
-Histogram script without notes can be found [here]()
+Histogram script without notes can be found [here](imiss_histogram.r)
+
+## Remove individuals based on missingness threshold 🗑️
+
+#Now that we have the frequency of missing day per individiual, a missingness threshold can be determined. The script below can be run on the command line to create a file listing samples that do not meet your missingness threshold.
+
+#Set threshold (e.g., 60% missing = 0.6)
+`THRESHOLD=0.6`
+
+#Extract sample names with missingness > $THRESHOLD
+`awk -v thresh=$THRESHOLD 'NR > 1 && $5 > thresh {print $1}' file.imiss > remove_above_${THRESHOLD}.txt`
+
+#This file can now be input into VCFtools script to remove individuals with missing data frequency above your set threshold
+
+#Change working directory
+`cd /path/to/files/`
+
+#Set the PERL5LIB environment variable to run VCFtools’ Perl scripts.
+`export PERL5LIB=/project/sackettl/software/vcftools/src/perl`
+
+`/path/to/vcftools/bin/vcftools --vcf file.vcf --remove "remove_above_0.6.txt" --recode --recode-INFO-all --out file_filtered`
+
+VCFtools remove individuals script without notes can be found [here]()
 
 ### 🚧 This Pipeline is still in Progress 🏗️
