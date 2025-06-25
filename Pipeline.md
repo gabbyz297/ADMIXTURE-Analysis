@@ -593,6 +593,19 @@ Plot PCA (Adjust V column numbers to your dataset)
 
 PCA R script without notes can be found [here](pca_plot.r)
 
+## Option: Thin your dataset to run ADMIXTURE ✂️
+If you have a high SNP count you may need to thin your data in order to run ADMIXTURE as it's not a program optimized to run using millions of SNPs. This can be done in PLINK 2.0. This script keeps 1% of LD pruned SNPs. You can adjust the percentage based on the size of your LD pruned file. 
+
+Change directory to loaction of files
+`cd /path/to/files/`
+
+`/path/to/plink2 --pfile filename --allow-extra-chr --extract pruned.prune.in  --thin 0.01 --make-bed --out filename`
+
+## Option: Remove characters from `.bim` file to run ADMIXTURE ✂️
+If your `.bim` file had characters in the chromosome names like mine did, you'll need to run this command line script to change the names to only be numeric or you'll get an error from ADMIXTURE.
+
+` awk '{gsub(/^character_/, "", $1); gsub(/^character_/, "", $2); print}' files.bim > tmp && mv tmp file.bim`
+
 ## Now we can run ADMIXTURE 🥳
 
 The first step is to run the cross validation to determine the optimal K value. This can be run using a range of K values determined by you. This script will be run in parallel. Our input file will be our BED file.
@@ -635,5 +648,27 @@ Merge CV results
 `cat cv_K*.txt >> cv_summary.txt`
 
 ADMIXTURE cross validation script without notes can be found [here](admixture_crossval.sh)
+
+## Visualize CV Error Values
+
+This script creates a simple histogram to visualize CV error results. The K value with the lowest CV error is the optimal K value.
+
+Load GGPLOT
+`library(ggplot2)`
+
+Read in CV summary output
+`cv<- read.table("cv_summary.txt", header = TRUE)`
+
+Plot CV error 
+`ggplot(cv, aes(x = K, y = CV_Error)) +
+  geom_line(color = "black", size = 1) +
+  geom_point(size = 8, color = "black") +
+  theme_minimal(base_size = 14) +
+  labs(x = "Number of Clusters (K)",
+       y = "Cross Validation Error") +
+  scale_x_continuous(breaks = cv$K) +
+  theme_bw()+ theme(axis.text=element_text(size=20), axis.title=element_text(size=18,face="bold"))`
+
+Cross validation plot R script without notes can be found [here]()
 
 ### 🚧 This Pipeline is still in Progress 🏗️
