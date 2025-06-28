@@ -404,7 +404,7 @@ Select SNPs usung the `select-type-to-include` flag. Use `exclude-non-variants` 
 
 GATK select SNP script without notes can be found [here](gatk_select_variants.sh)
 
-## Flag variants with GATK
+## Flag variants with GATK 🚩
 GATK allows for several different highly customizable filters for quality controlling your genotyped VCF file, from removing sites with low coverage to removing sequencing artifacts. 
 
 `ReadPosRankSum` compares whether positions of reference and alternate alleles are different within reads, `MQRankSum` compares mapping qualities of reads supporting the reference allele and alternate allele, `FS` Phred-scaled probability that there is strand bias at the site. `FS` value will be close to 0 when there is little to no strand bias at the site, `QD` is the variant confidence divided by the unfiltered depth of samples. This normalizes the variant quality in order to avoid inflation caused when there is deep coverage, `DP` is genotype depth of coverage
@@ -434,6 +434,18 @@ Change directory to location of VCF file
 `/path/to/gatk-4.1.2.0/gatk SelectVariants -R /path/to/reference/.fa --variant /path/to/file/file.vcf --output /path/to/file/file.vcf --set-filtered-gt-to-nocall true`
 
 GATK filtered variants script without notes can be found [here](gatk_filtered_variants.sh)
+
+## Remove sites with more than 80% missing data
+
+Change directory to location of VCF file
+`cd /path/to/files/`
+
+Set the PERL5LIB environment variable to run VCFtools’ Perl scripts.
+`export PERL5LIB=/path/to/vcftools/src/perl` 
+
+`/path/to/vcftools/bin/vcftools --vcf /path/to/file/file.vcf --max-missing 0.2 --recode --out /path/to/file/file`
+
+VCFtools site missingness script without notes can be found [here]()
 
 ## Determine the frequecy of missing data with VCFtools 🎯
 
