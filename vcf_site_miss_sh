@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH -p single
+#SBATCH -N 1
+#SBATCH -n 2
+#SBATCH -t 04:00:00
+#SBATCH -A loni_chiguiro25
+#SBATCH -o vcf_site_miss.out
+#SBATCH -e vcf_site_miss.err
+
+
+cd /work/gabby297/batch2/vcf_files/
+export PERL5LIB=/project/sackettl/software/vcftools/src/perl
+
+/project/sackettl/software/vcftools/bin/vcftools --vcf  ALL_HAAM_final_SNP_filtered.vcf --max-missing 0.2 --recode --out ALL_HAAM_final_SNP_filtered_q80.vcf
+~                                                                                                                                                                                             
+~                                                                                                                                                       
