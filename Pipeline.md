@@ -445,7 +445,7 @@ Set the PERL5LIB environment variable to run VCFtools’ Perl scripts.
 
 `/path/to/vcftools/bin/vcftools --vcf /path/to/file/file.vcf --max-missing 0.2 --recode --out /path/to/file/file`
 
-VCFtools site missingness script without notes can be found [here]()
+VCFtools site missingness script without notes can be found [here](vcf_site_miss_sh)
 
 ## Determine the frequecy of missing data with VCFtools 🎯
 
