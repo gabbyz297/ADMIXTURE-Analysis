@@ -418,7 +418,7 @@ Call your VCF file and you reference genome
 
 Create filters and their threshold cutoffs
 
-`--filter-name "ReadPosRankSum_filter" \ --filter-expression "ReadPosRankSum < -8.0" \ --filter-name "MQRankSum_filter" \ --filter-expression "MQRankSum < -12.5" \ --filter-name "FS_filter" \ --filter-expression "FS > 60.0" \ --filter-name "QD_filter" \ --filter-expression "QD < 2.0" \ --genotype-filter-name "DP8filter" \ --genotype-filter-expression "DP < 8" 2>/dev/null`
+` --filter-name "FS_filter" \ --filter-expression "FS > 60.0" \ --filter-name "QD_filter" \ --filter-expression "QD < 2.0" \ --genotype-filter-name "DP2filter" \ --genotype-filter-expression "DP < 2" 2>/dev/null`
 
 GATK filter script without notes can be found [here](gatk_filter.sh)
 
@@ -608,7 +608,7 @@ If your `.bim` file had characters in the chromosome names like mine did, you'll
 
 ## Now we can run ADMIXTURE 🥳
 
-The first step is to run the cross validation to determine the optimal K value. This can be run using a range of K values determined by you. This script will be run in parallel. Our input file will be our BED file.
+We will be running cross validation to help determine the optimal K value. This can be run using a range of K values determined by you. This script will be run in parallel. Our input file will be our BED file.
 
 Load GNU parallel
 `module load parallel/20190222/intel-19.0.5`
@@ -669,6 +669,10 @@ Plot CV error
   scale_x_continuous(breaks = cv$K) +
   theme_bw()+ theme(axis.text=element_text(size=20), axis.title=element_text(size=18,face="bold"))`
 
-Cross validation plot R script without notes can be found [here]()
+Cross validation plot R script without notes can be found [here](cv_error_plot.r)
+
+## Visualize ADMIXTURE Results
+
+
 
 ### 🚧 This Pipeline is still in Progress 🏗️
